@@ -1,0 +1,110 @@
+<svg width="800" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+
+  <!-- Background transparent for GitHub light/dark -->
+
+  <!-- ── INPUTS ─────────────────────────────────────────────── -->
+
+  <!-- Your Context -->
+  <rect x="30" y="30" width="200" height="66" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.2"/>
+  <text x="130" y="57" text-anchor="middle" font-size="14" font-weight="600" fill="#4C1D95">Your context</text>
+  <text x="130" y="76" text-anchor="middle" font-size="11" fill="#6D28D9">Set up once · always loaded</text>
+
+  <!-- Job Description -->
+  <rect x="570" y="30" width="200" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="1.2"/>
+  <text x="670" y="57" text-anchor="middle" font-size="14" font-weight="600" fill="#064E3B">Job description</text>
+  <text x="670" y="76" text-anchor="middle" font-size="11" fill="#047857">Per application</text>
+
+  <!-- Arrows into strategy -->
+  <line x1="230" y1="63" x2="278" y2="63" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="570" y1="63" x2="522" y2="63" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── STRATEGY LAYER ──────────────────────────────────────── -->
+  <rect x="280" y="24" width="240" height="78" rx="12" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="400" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#7F1D1D">Role strategy profile</text>
+  <text x="400" y="70" text-anchor="middle" font-size="11" fill="#B91C1C">Employer needs × your strengths</text>
+  <text x="400" y="86" text-anchor="middle" font-size="10" fill="#EF4444">every output flows through here</text>
+
+  <!-- Arrow down from strategy -->
+  <line x1="400" y1="102" x2="400" y2="148" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── OUTPUTS ─────────────────────────────────────────────── -->
+
+  <!-- "filtered through strategy" label -->
+  <text x="400" y="146" text-anchor="middle" font-size="10" fill="#9CA3AF">filtered through strategy</text>
+
+  <!-- Resume -->
+  <rect x="30" y="166" width="180" height="58" rx="8" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/>
+  <text x="120" y="190" text-anchor="middle" font-size="13" font-weight="600" fill="#4C1D95">Resume</text>
+  <text x="120" y="208" text-anchor="middle" font-size="10" fill="#6D28D9">Bullets matched to role</text>
+
+  <!-- Cover Letter -->
+  <rect x="235" y="166" width="180" height="58" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="1"/>
+  <text x="325" y="190" text-anchor="middle" font-size="13" font-weight="600" fill="#064E3B">Cover letter</text>
+  <text x="325" y="208" text-anchor="middle" font-size="10" fill="#047857">In your voice</text>
+
+  <!-- Fit Analysis -->
+  <rect x="440" y="166" width="180" height="58" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+  <text x="530" y="190" text-anchor="middle" font-size="13" font-weight="600" fill="#78350F">Fit analysis</text>
+  <text x="530" y="208" text-anchor="middle" font-size="10" fill="#92400E">Honest req-by-req score</text>
+
+  <!-- Revision Notes -->
+  <rect x="645" y="166" width="130" height="58" rx="8" fill="#F3F4F6" stroke="#6B7280" stroke-width="1"/>
+  <text x="710" y="190" text-anchor="middle" font-size="13" font-weight="600" fill="#1F2937">Revision notes</text>
+  <text x="710" y="208" text-anchor="middle" font-size="10" fill="#4B5563">Gaps + bullet bank</text>
+
+  <!-- Connector bar from strategy down -->
+  <line x1="400" y1="158" x2="120" y2="158" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="120" y1="158" x2="120" y2="166" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="400" y1="158" x2="325" y2="158" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="325" y1="158" x2="325" y2="166" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="400" y1="158" x2="530" y2="158" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="530" y1="158" x2="530" y2="166" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="400" y1="158" x2="710" y2="158" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="710" y1="158" x2="710" y2="166" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- ── PDF EXPORT ──────────────────────────────────────────── -->
+  <!-- Down arrows from resume + cover letter → PDF -->
+  <line x1="120" y1="224" x2="120" y2="268" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="325" y1="224" x2="325" y2="268" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="120" y1="268" x2="325" y2="268" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="222" y1="268" x2="222" y2="278" stroke="#E5E7EB" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="130" y="278" width="184" height="52" rx="8" fill="#FEE2E2" stroke="#DC2626" stroke-width="1"/>
+  <text x="222" y="300" text-anchor="middle" font-size="13" font-weight="600" fill="#7F1D1D">PDF export</text>
+  <text x="222" y="316" text-anchor="middle" font-size="10" fill="#B91C1C">resume.pdf · cover-letter.pdf</text>
+
+  <!-- ── OUTPUT FOLDER ──────────────────────────────────────── -->
+  <rect x="30" y="358" width="740" height="46" rx="8" fill="none" stroke="#D1D5DB" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="48" y="380" font-size="11" fill="#9CA3AF" font-family="'SFMono-Regular', Consolas, monospace">outputs/</text>
+  <text x="48" y="395" font-size="10" fill="#9CA3AF" font-family="'SFMono-Regular', Consolas, monospace">  job.md · role-strategy.md · resume.md · cover-letter.md · fit-analysis.md · revision-notes.md · resume.pdf · cover-letter.pdf</text>
+
+  <!-- drop lines from output cards to folder -->
+  <line x1="120" y1="330" x2="120" y2="358" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <line x1="325" y1="224" x2="710" y2="224" stroke="none"/>
+  <line x1="530" y1="224" x2="530" y2="358" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <line x1="710" y1="224" x2="710" y2="358" stroke="#E5E7EB" stroke-width="0.8" stroke-dasharray="3 2"/>
+
+  <!-- ── TAGLINE ─────────────────────────────────────────────── -->
+  <text x="400" y="430" text-anchor="middle" font-size="11" fill="#9CA3AF" font-style="italic">Nothing generic used directly — everything is filtered through the strategy layer first</text>
+
+  <!-- ── LEGEND ─────────────────────────────────────────────── -->
+  <rect x="220" y="450" width="12" height="12" rx="3" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/>
+  <text x="238" y="461" font-size="11" fill="#6B7280">Your materials</text>
+
+  <rect x="330" y="450" width="12" height="12" rx="3" fill="#FEE2E2" stroke="#DC2626" stroke-width="1"/>
+  <text x="348" y="461" font-size="11" fill="#6B7280">Strategy / export</text>
+
+  <rect x="455" y="450" width="12" height="12" rx="3" fill="#D1FAE5" stroke="#059669" stroke-width="1"/>
+  <text x="473" y="461" font-size="11" fill="#6B7280">Job / employer</text>
+
+  <rect x="570" y="450" width="12" height="12" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+  <text x="588" y="461" font-size="11" fill="#6B7280">Evaluation</text>
+
+  <!-- ── ARROW MARKER ────────────────────────────────────────── -->
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+</svg>

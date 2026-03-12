@@ -2,6 +2,8 @@
 
 A Claude Code workspace that generates tailored, submission-ready job applications — resume, cover letter, fit analysis, and PDF export — from a job description and your professional context.
 
+![Job Application Engine Diagram](job-engine-diagram.svg)
+
 ---
 
 ## The Problem This Solves
