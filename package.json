@@ -1,0 +1,15 @@
+{
+  "name": "job-application-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render:html": "node scripts/render_html.js",
+    "export:pdf": "node scripts/export_pdf.js",
+    "export:all": "bash scripts/export_all.sh"
+  },
+  "dependencies": {
+    "marked": "^15.0.0",
+    "playwright": "^1.58.0"
+  }
+}

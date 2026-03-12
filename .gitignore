@@ -1,0 +1,6 @@
+node_modules/
+outputs/*/resume.html
+outputs/*/cover-letter.html
+outputs/*/resume.pdf
+outputs/*/cover-letter.pdf
+.DS_Store

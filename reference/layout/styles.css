@@ -1,0 +1,99 @@
+/* === Page & Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #1a1a1a;
+  max-width: 100%;
+}
+
+/* === Headings === */
+h1 {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-size: 22pt;
+  font-weight: 700;
+  margin-bottom: 2pt;
+  color: #111;
+}
+
+h2 {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-size: 13pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  border-bottom: 1.5pt solid #333;
+  padding-bottom: 3pt;
+  margin-top: 14pt;
+  margin-bottom: 8pt;
+  color: #222;
+}
+
+h3 {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-size: 11.5pt;
+  font-weight: 700;
+  margin-top: 10pt;
+  margin-bottom: 4pt;
+  color: #222;
+}
+
+/* === Contact line (paragraph right after h1) === */
+h1 + p {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-size: 10pt;
+  color: #444;
+  margin-bottom: 6pt;
+}
+
+/* === Horizontal rules === */
+hr {
+  border: none;
+  border-top: 1pt solid #ccc;
+  margin: 10pt 0;
+}
+
+/* Prevent double rule after contact line */
+h1 + p + hr {
+  margin-top: 6pt;
+}
+
+/* === Body text === */
+p {
+  margin-bottom: 6pt;
+}
+
+/* === Lists (resume bullets) === */
+ul {
+  margin-left: 18pt;
+  margin-bottom: 8pt;
+}
+
+li {
+  margin-bottom: 4pt;
+}
+
+/* === Print overrides === */
+@media print {
+  body {
+    font-size: 11pt;
+  }
+
+  h2 {
+    page-break-after: avoid;
+  }
+
+  h3 {
+    page-break-after: avoid;
+  }
+
+  li {
+    page-break-inside: avoid;
+  }
+}
