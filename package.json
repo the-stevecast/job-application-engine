@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "render:html": "node scripts/render_html.js",
-    "export:pdf": "node scripts/export_pdf.js",
-    "export:all": "bash scripts/export_all.sh"
+    "export:pdf": "node scripts/export_pdf.js"
   },
   "dependencies": {
     "marked": "^15.0.0",

@@ -10,7 +10,41 @@ section: $ARGUMENTS (optional — profile, targeting, bullets, skills, voice, la
 
 ## Instructions
 
-### Phase 0: Determine Mode
+### Phase 0: Environment Check (full setup only — skip if a section argument is provided)
+
+Before doing anything else, verify the environment is ready to run the export pipeline. Do these checks in order.
+
+**Step 1 — Check Node.js**
+
+Run `node --version`. If the command fails or Node.js is not found, stop immediately and tell the user:
+
+"Node.js is required and doesn't appear to be installed. Please download and install it from https://nodejs.org/en/download — choose the LTS version. Installation takes 2-3 minutes. Once it's done, restart Claude Code and run `/setup` again."
+
+Do not proceed until Node.js is confirmed installed.
+
+**Step 2 — Install npm dependencies**
+
+Check whether `node_modules/` exists in the project root. If it does not:
+
+Ask: "I need to install a few dependencies before we get started. Mind if I do that now? It only takes a few seconds."
+
+On approval, run `npm install`. Confirm it succeeds before continuing.
+
+**Step 3 — Install Playwright browser**
+
+Check whether Playwright's Chromium browser is already installed by running `npx playwright install chromium --dry-run 2>&1`. If the output indicates it needs to be downloaded:
+
+Ask: "I also need to download a browser for PDF export — it's a one-time ~180MB download and takes 1-3 minutes depending on your connection. OK to proceed?"
+
+On approval, run `npx playwright install chromium` and let the user know it's running. Once complete, confirm it succeeded.
+
+**Step 4 — Proceed**
+
+Once all three checks pass, continue to Determine Mode below.
+
+---
+
+### Phase 0b: Determine Mode
 
 1. Check whether `$ARGUMENTS` contains a section name.
 2. If a section argument is provided (e.g., `profile`, `targeting`, `bullets`, `skills`, `voice`, `layout`), jump directly to the matching phase and run only that section. Skip to the Phase 9 file-writing step for that section only when done.
