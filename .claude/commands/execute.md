@@ -1,6 +1,6 @@
-# Implement
+# Execute
 
-Execute an implementation plan created by `/create-plan`. Read the plan thoroughly, execute each step in order, and report on the completed work.
+Execute an implementation plan created by `/build`. Read the plan thoroughly, execute each step in order, and report on the completed work.
 
 ## Variables
 
@@ -54,7 +54,7 @@ plan_path: $ARGUMENTS (path to the plan file, e.g., `plans/2026-01-28-add-guest-
 
 3. **Check cross-references and consistency:**
    - Ensure new files are referenced where they should be
-   - Verify CLAUDE.md is updated if workspace structure changed
+   - Verify SYSTEM.md is updated if workspace structure changed
    - Confirm naming conventions are followed
 
 ---

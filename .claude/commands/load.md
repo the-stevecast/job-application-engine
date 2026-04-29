@@ -1,6 +1,8 @@
-# Prime
+# Load
 
-Initialize a session with full context awareness.
+Initialize or reset session context.
+
+Run this at the start of every session, and between applications to prevent context from one role bleeding into the next. This command reads your context files fresh each time — it does not modify any files.
 
 ## Instructions
 
@@ -14,7 +16,7 @@ If the file is empty or contains only placeholder text, stop and say:
 ### Step 2: Read Context
 
 Read the following files:
-- `CLAUDE.md` — workspace structure and commands
+- `SYSTEM.md` — workspace structure and commands
 - `context/user-profile.md` — who the user is
 - `context/positioning-narrative.md` — positioning and differentiators
 - `context/target-roles.md` — role lanes and search keywords
@@ -26,17 +28,17 @@ Read the following files:
 
 Provide a brief session brief covering:
 
-1. **Who you are:** One paragraph synthesizing their professional identity, career background, and what they're targeting — written back to them so they can confirm the agent has the right picture.
+1. **Who you are:** One paragraph synthesizing their professional identity, career background, and what they're targeting — written back to them so they can confirm the context is correct.
 
 2. **Target lanes:** List their defined lanes with one-line descriptions.
 
 3. **Available commands:**
-   - `/setup [section]` — update context
+   - `/setup [section]` — build or update context
    - `/apply [job description]` — generate full application package
    - `/interpret-role [job description]` — role analysis only
    - `/export-pdf [output-dir]` — render and export PDFs
-   - `/create-plan [request]` — plan workspace changes
-   - `/implement [plan-path]` — execute a plan
+   - `/build [request]` — plan workspace changes
+   - `/execute [plan-path]` — execute a plan
 
 4. **Recent outputs** (if any exist in `outputs/`): List the most recent 2-3 application packages by directory name.
 

@@ -379,6 +379,6 @@ After writing all files:
 3. Show their defined lanes with one-line descriptions.
 4. Say: "Your context is ready. Here are your next steps:
    - Review the files in `context/` — especially `resume-bullet-bank.md`. Add [TBD] metrics as you remember them.
-   - Run `/prime` at the start of each new Claude Code session to load context.
+   - Run `/load` at the start of each new session to load context, and between applications to start fresh.
    - When you have a job to apply to, run `/apply [paste the job description]`.
    - To update any section of your context later, run `/setup [section-name]`."

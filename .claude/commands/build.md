@@ -1,6 +1,8 @@
-# Plan
+# Build
 
 Create a detailed implementation plan for changes to this workspace. Plans are thorough documents that capture the full context, rationale, and step-by-step tasks needed to execute a change with complete alignment across the project.
+
+**IMPORTANT:** This command creates a PLAN only. It does not execute any changes. Use `/execute` to carry out a plan.
 
 ## Variables
 
@@ -10,14 +12,13 @@ request: $ARGUMENTS (describe what you want to plan — new command, new workflo
 
 ## Instructions
 
-- **IMPORTANT:** You are creating a PLAN, not implementing changes. Research thoroughly, think deeply, then output a comprehensive plan document.
-- Use your reasoning capabilities to think hard about the request, workspace structure, and best approach.
+- Research thoroughly, think carefully, then output a comprehensive plan document.
 - Research the workspace to understand existing patterns, conventions, and how this change fits.
 - Create the plan in the `plans/` directory with filename: `YYYY-MM-DD-{descriptive-name}.md`
   - Use today's date
   - Replace `{descriptive-name}` with a short, kebab-case name (e.g., "add-guest-research-command", "restructure-outputs", "create-outreach-workflow")
 - Fill out every section of the Plan Format below. Replace all `<placeholders>` with specific, actionable content.
-- Be thorough — this plan will be executed by `/implement` and needs enough detail to execute without ambiguity.
+- Be thorough — this plan will be executed by `/execute` and needs enough detail to execute without ambiguity.
 - Follow existing patterns. Study similar files in the workspace before proposing new structures.
 
 ---
@@ -27,7 +28,7 @@ request: $ARGUMENTS (describe what you want to plan — new command, new workflo
 Before writing the plan, investigate:
 
 1. **Read core reference files:**
-   - `CLAUDE.md` — workspace overview
+   - `SYSTEM.md` — workspace overview
    - `context/` — background context on the user and project
 
 2. **Explore relevant areas:**
@@ -191,7 +192,7 @@ How to verify the implementation is complete and correct:
 
 - [ ] <Verification step — e.g., "New command runs without errors">
 - [ ] <Verification step — e.g., "Output files created in correct location">
-- [ ] <Verification step — e.g., "CLAUDE.md updated to reflect new structure">
+- [ ] <Verification step — e.g., "SYSTEM.md updated to reflect new structure">
 - [ ] <Verification step — e.g., "Cross-references updated and valid">
 
 ---
@@ -216,7 +217,7 @@ The implementation is complete when:
 ## Quality Standards
 
 - **Completeness:** Every section filled out with specific content, no generic placeholders left
-- **Actionability:** Steps are detailed enough that `/implement` can execute without asking questions
+- **Actionability:** Steps are detailed enough that `/execute` can carry them out without asking questions
 - **Consistency:** Follows existing workspace patterns and naming conventions
 - **Clarity:** Someone unfamiliar with the project could understand and execute the plan
 - **Traceability:** Changes are connected back to goals and rationale
@@ -230,4 +231,4 @@ After creating the plan:
 1. Provide a brief summary of what the plan covers
 2. List any open questions that need user input before implementation
 3. Provide the full path to the plan file: `plans/YYYY-MM-DD-{name}.md`
-4. Remind user to run `/implement plans/YYYY-MM-DD-{name}.md` to execute
+4. Remind the user to run `/execute plans/YYYY-MM-DD-{name}.md` to carry it out
