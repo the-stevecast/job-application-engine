@@ -61,6 +61,7 @@ The workspace agent should always read the relevant context files before generat
 │       ├── apply.md             # /apply — generate full application package
 │       ├── interpret-role.md    # /interpret-role — role analysis only
 │       ├── export-pdf.md        # /export-pdf — render and export PDFs
+│       ├── gap-extract.md       # /gap-extract — generate helper prompt for gap conversations
 │       ├── build.md             # /build — plan workspace changes
 │       └── execute.md           # /execute — execute a plan
 ├── context/                     # Your personal context (built by /setup)
@@ -80,6 +81,7 @@ The workspace agent should always read the relevant context files before generat
 ├── reference/
 │   ├── resume-template.md       # Resume structure template
 │   ├── cover-letter-template.md # Cover letter structure and rules
+│   ├── gap-extract-starter-prompt.md # Annotated starter prompt for gap conversations
 │   └── layout/                  # HTML/CSS templates for PDF export
 │       ├── resume.html
 │       ├── cover-letter.html
@@ -156,6 +158,16 @@ Use for quick role analysis without generating the full package. Produces `job.m
 Takes a directory path (e.g., `outputs/acme-pm-2026-01-15`) and exports `resume.pdf` and `cover-letter.pdf`. Page size is read from `context/layout-preferences.md`.
 
 Example: `/export-pdf outputs/acme-pm-2026-01-15`
+
+### /gap-extract [output-dir]
+
+**Purpose:** Generate a helper prompt for extracting undocumented experience from the user.
+
+Run after `/apply` when `revision-notes.md` or `fit-analysis.md` identifies gaps — experience the user likely has but hasn't documented yet. Reads the output directory, compiles the gaps, and produces a complete ready-to-paste prompt for a separate AI chat session. That conversation draws out the experience in natural language and returns structured content to add back to the context files.
+
+If no directory is specified, uses the most recent output folder. Saves the generated prompt to `gap-extract-prompt.md` in the output directory.
+
+The return flow: after the helper conversation, bring the structured output back here and say "add these to my context files." Then re-run `/apply` on the same job to regenerate with the stronger evidence.
 
 ### /build [request]
 
