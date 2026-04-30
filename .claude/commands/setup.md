@@ -1,6 +1,6 @@
 # Setup
 
-Build or update your context files through conversational Q&A.
+Build or update your context files.
 
 ## Variables
 
@@ -18,7 +18,7 @@ Before doing anything else, verify the environment is ready to run the export pi
 
 Run `node --version`. If the command fails or Node.js is not found, stop immediately and tell the user:
 
-"Node.js is required and doesn't appear to be installed. Please download and install it from https://nodejs.org/en/download — choose the LTS version. Installation takes 2-3 minutes. Once it's done, restart Claude Code and run `/setup` again."
+"Node.js is required and doesn't appear to be installed. Please download and install it from https://nodejs.org/en/download — choose the LTS version. Installation takes 2-3 minutes. Once it's done, restart your AI workspace and run `/setup` again."
 
 Do not proceed until Node.js is confirmed installed.
 
@@ -47,304 +47,358 @@ Once all three checks pass, continue to Determine Mode below.
 ### Phase 0b: Determine Mode
 
 1. Check whether `$ARGUMENTS` contains a section name.
-2. If a section argument is provided (e.g., `profile`, `targeting`, `bullets`, `skills`, `voice`, `layout`), jump directly to the matching phase and run only that section. Skip to the Phase 9 file-writing step for that section only when done.
+2. If a section argument is provided, jump directly to the matching section update phase below. Run only that section, then jump to Phase 9 to write only the relevant files.
 3. If no argument is provided:
    - Check whether `context/user-profile.md` already contains non-placeholder content (i.e., setup has been run before).
-   - If context exists: ask the user "It looks like you've already completed setup. Would you like to run the full setup again from scratch, or update a specific section? (full / profile / targeting / bullets / skills / voice / layout)"
+   - If context exists: ask "It looks like you've already completed setup. Would you like to run the full setup again from scratch, or update a specific section? (full / profile / targeting / bullets / skills / voice / layout)"
    - If no context exists: proceed with full setup from Phase 1.
 
 **Section argument routing:**
 
 | Argument | Jump to | Files updated |
 |----------|---------|---------------|
-| `profile` | Phase 2 + 3 | `context/user-profile.md`, `context/positioning-narrative.md`, `reference/resume-template.md` header |
-| `targeting` | Phase 4 | `context/target-roles.md`, `context/constraints-and-boundaries.md` |
-| `bullets` | Phase 5 | `context/resume-bullet-bank.md`, `context/metrics-and-proof-points.md` |
-| `skills` | Phase 6 | `context/systems-experience.md` |
-| `voice` | Phase 7 | `context/writing-voice.md` |
-| `layout` | Phase 8 | `context/layout-preferences.md` |
+| `profile` | Section Update: Profile | `context/user-profile.md`, `context/positioning-narrative.md`, `reference/resume-template.md` header |
+| `targeting` | Section Update: Targeting | `context/target-roles.md`, `context/constraints-and-boundaries.md` |
+| `bullets` | Section Update: Bullets | `context/resume-bullet-bank.md`, `context/metrics-and-proof-points.md` |
+| `skills` | Section Update: Skills | `context/systems-experience.md` |
+| `voice` | Section Update: Voice | `context/writing-voice.md` |
+| `layout` | Section Update: Layout | `context/layout-preferences.md` |
 
 ---
 
-### Phase 1: Introduction (full setup only)
+## Full Setup Flow
+
+### Phase 1: Welcome
 
 Tell the user:
 
-"Welcome to the Job Application Engine. Before you can generate tailored applications, I need to build a picture of who you are — your background, target roles, communication style, and preferences.
+"Welcome. The fastest way to get started is to drop in a resume — any version, any format. PDF, Word doc, plain text, a LinkedIn export. Whatever you have.
 
-Here's what we'll cover:
-1. Your identity and contact info
-2. Career summary and what you're great at
-3. Role targeting — what kinds of jobs you're going for
-4. Career history — your roles and accomplishments (I'll help you format these into resume bullets)
-5. Skills, tools, and platforms
-6. Your writing voice and style preferences
-7. PDF layout preferences
+I'll read it, build your professional profile, and then ask you three short questions about what you're looking for next. That's it.
 
-This takes about 10-15 minutes. I'll write all your context files as we go. You can update any section later by running `/setup [section-name]`.
+Drop your resume here whenever you're ready. If you don't have one handy, just say so and we'll go another way."
 
-Ready to start?"
-
-Wait for confirmation before proceeding.
+Wait for the user to respond before proceeding.
 
 ---
 
-### Phase 2: Identity & Contact
+### Phase 2: Extract from Resume
 
-Ask these questions one at a time. Wait for each answer before asking the next.
+**If the user provides a resume (any format):**
+
+Read and extract the following:
+- Full name
+- Location (city, state)
+- Email address
+- Phone number
+- LinkedIn URL (if present)
+- Professional summary or headline (if present)
+- All roles: company name, title, dates, and bullet points
+- Education: degrees, institutions, years
+- Skills, tools, technologies, platforms
+- Any metrics or numbers mentioned
+
+After extracting, do two things:
+
+**First**, synthesize and reflect back a professional identity statement — not a data dump. Write it as a paragraph:
+
+"Here's what I've gathered: [Name] is a [X-year] [field] professional based in [location]. [2-3 sentence synthesis of their career arc and what they're known for, derived from the resume content]. Their background includes [brief career highlights]. Their tools and platforms include [key skills/tools]."
+
+**Second**, confirm the contact details:
+
+"I'll use these for your resume header:
+- Name: [name]
+- Location: [location]
+- Email: [email]
+- Phone: [phone]
+- LinkedIn: [linkedin or 'not found — let me know if you'd like to add it']
+
+Does that look right?"
+
+Wait for confirmation. Correct anything the user flags.
+
+If any contact detail is missing and the user doesn't correct it, note it as [TBD] — don't ask for it as a separate question.
+
+**If the user says they don't have a resume:**
+
+Say: "No problem. You can drop in anything — a LinkedIn About section, a professional bio, even just a few sentences describing what you do. Or if you'd prefer, I can walk you through a few questions instead. What works best for you?"
+
+- If they provide any text: treat it the same as a resume and extract what you can.
+- If they prefer questions: run the fallback Q&A (see end of this section).
+
+---
+
+### Phase 3: Targeted Follow-up
+
+After confirming the extracted profile, ask these three questions. Ask them one at a time, in order.
+
+**Question 1 — Targeting**
+
+"What kinds of roles are you going for? Give me 2-3 titles or categories."
+
+For each category they name, ask:
+"What's the core value you'd bring to a [role type] role — what problem do you solve for them?"
+
+Then ask: "Any hard no's? Industries, work environments, company sizes, or constraints like remote-only?"
+
+Organize their answers into 2-3 named lanes and confirm:
+"I'm going to organize your targeting into [N] lanes: [Lane 1], [Lane 2]. Does that capture it?"
+
+**Question 2 — Voice**
+
+"How would you describe your communication style? And is there anything you'd want to avoid in how your application materials sound — certain words, phrases, or tones?"
+
+If the resume had a clear and distinctive voice, note it and confirm rather than asking from scratch:
+"Your resume reads as [observation about tone]. Is that how you'd describe your style, or would you adjust it?"
+
+**Question 3 — (none)**
+
+Layout defaults to US Letter. No question needed.
+
+---
+
+### Phase 3 Fallback: Q&A Path (no resume provided)
+
+Use this only if the user has no document to provide and prefers questions.
+
+Ask these in order, one at a time:
 
 1. "What's your full name?"
-2. "Where are you located? (City and state — this will appear on your resume header)"
-3. "What's your professional email address?"
-4. "What's your phone number?"
-5. "What's your LinkedIn URL? (e.g., linkedin.com/in/yourname)"
+2. "Where are you located? (City and state)"
+3. "What's your professional email and phone number?"
+4. "LinkedIn URL, if you have one?"
+5. "In a sentence or two, how would you describe what you do professionally?"
+6. "What are you best known for — what would a past colleague say your strongest skill is?"
+7. "Walk me through your most recent role: title, company, dates, and what you actually did there." (Repeat for each role.)
+8. "What tools, platforms, or technologies do you use regularly?"
+9. "What roles are you targeting next? Any hard no's or constraints?"
+10. "How would you describe your communication style? Anything to avoid in your materials?"
 
-Collect all five answers before moving on. Confirm: "Got it — I'll use [name], [location], [email], [phone], [linkedin]. Does that look right?"
-
----
-
-### Phase 3: Career Summary
-
-Ask these questions conversationally. You're building a picture of their professional identity.
-
-1. "In one or two sentences, how would you describe what you do professionally?"
-2. "What are you best known for? If a past colleague or client described your strongest skill, what would they say?"
-3. "How many years of total professional experience do you have?"
-4. "What field or industry are you primarily in?"
-
-After collecting answers, synthesize and reflect back: "So you're a [X-year] [field] professional known for [key strength]. Is that a fair summary?"
+After each role description, draft 3-5 bullets using **Ownership verb + System/Process + Impact** and confirm with the user before moving on.
 
 ---
 
-### Phase 4: Role Targeting
+## Section Update Phases
 
-1. "What kinds of roles are you targeting in your job search? Give me 2-3 categories or example titles."
-
-For each category the user names, ask:
-- "What's the core value you'd bring to a [role type] role — what problem do you solve for them?"
-
-Then:
-2. "Are there any roles, industries, or work environments you want to avoid?"
-3. "Any hard constraints — things like travel requirements, company size, remote vs. on-site, or industries you won't consider?"
-
-Organize their answers into 2-3 named "lanes" — groupings of similar target roles. Give each lane a short label based on what they described.
-
-Confirm: "I'm going to organize your targeting into [N] lanes: [Lane 1: description], [Lane 2: description]. Does that capture it?"
+These phases are used only when a section argument is provided (e.g., `/setup targeting`). They are not part of the full setup flow.
 
 ---
 
-### Phase 5: Career History
+### Section Update: Profile
 
-This is the most important phase. Take your time here.
+Ask:
+1. "Do you have an updated resume or any new material to pull from? If so, drop it here."
+   - If yes: extract and update identity, contact, career history, and skills from the document.
+   - If no: ask the questions below.
+2. "How has your professional identity or focus changed since your last setup?"
+3. "Any contact details to update? (email, phone, location, LinkedIn)"
 
-1. "Let's walk through your career history. Starting with your most recent role: what was your title, company, and approximate dates?"
-
-For each role:
-2. "What were 3-5 key things you accomplished or owned in this role? Don't worry about formatting — just tell me what you did."
-
-After the user describes each role, generate 3-5 formatted bullet points using this structure:
-**Ownership verb + System/Process + Impact**
-
-Example transformation:
-- User says: "I managed our CRM and made sure the sales team had accurate data"
-- You write: "Administered and maintained CRM data integrity for a 40-person sales team, establishing naming conventions and cleanup processes that reduced duplicate records by [TBD]%"
-
-Show the drafted bullets to the user and say: "Here are the bullets I've drafted for [role]. Do any of these need to be corrected, expanded, or removed?"
-
-3. After all roles are covered, ask: "Are there any metrics or numbers from any of these roles you remember? Things like revenue numbers, percentage improvements, team sizes, timeframes, or dollar amounts. Even rough estimates help."
-
-Mark any unquantified bullets with [TBD] as placeholders.
-
-Repeat for all roles, most recent to oldest.
+Update `context/user-profile.md`, `context/positioning-narrative.md`, and the header in `reference/resume-template.md`.
 
 ---
 
-### Phase 6: Skills & Systems
+### Section Update: Targeting
 
-1. "What tools, platforms, or technologies do you use regularly in your work?"
-2. "What are your signature technical or domain skills — the things you'd be hired for, not just familiar with?"
-3. "Is there anything you're especially known for that might not show up in a job title? Any specialized knowledge, methods, or areas of expertise?"
+Ask:
+1. "What kinds of roles are you going for now? Have your target lanes changed?"
+2. "Any new industries or environments to avoid? Any changes to your hard constraints?"
 
----
+Reorganize into updated lane definitions and confirm before writing.
 
-### Phase 7: Writing Voice & Style
-
-1. "How would you describe your communication style? For example: direct and concise, warm and conversational, formal, analytical, enthusiastic — or something else?"
-2. "Is there any language, jargon, or phrasing you want to avoid in your application materials?"
-3. "Any specific punctuation or formatting preferences? For example, some people prefer no em-dashes, or want to avoid certain buzzwords."
-4. "What tone do you want in your cover letters? Options include: peer-to-peer (speaking as an equal to the hiring manager), collaborative, confident and direct, warm and personable, or something specific to your field."
+Update `context/target-roles.md` and `context/constraints-and-boundaries.md`.
 
 ---
 
-### Phase 8: Layout Preferences
+### Section Update: Bullets
 
-1. "What page size do you prefer for your PDFs — US Letter or A4?" (Default: US Letter if outside the US isn't confirmed)
-2. "Any other visual preferences for your resume? Note that advanced customization (fonts, colors, spacing) requires editing `reference/layout/styles.css` directly — but I can note any preferences here for your reference."
+Ask:
+1. "Do you have any new roles, projects, or accomplishments to add? Drop a resume or describe what's new."
+   - If they provide a document: extract new roles and bullets.
+   - If they describe verbally: draft bullets using **Ownership verb + System/Process + Impact** and confirm.
+2. "Any new metrics or numbers to add? Revenue, team size, percentages, timeframes?"
+
+Update `context/resume-bullet-bank.md` and `context/metrics-and-proof-points.md`.
 
 ---
 
-### Phase 9: Write All Context Files
+### Section Update: Skills
 
-After completing all Q&A phases (or the targeted section), write the relevant files.
+Ask:
+1. "Any new tools, platforms, or technologies to add?"
+2. "Any skills you've deepened or started leading with that weren't in your profile before?"
+
+Update `context/systems-experience.md`.
+
+---
+
+### Section Update: Voice
+
+Ask:
+1. "How would you describe your communication style?"
+2. "Anything to avoid in your application materials — words, phrases, tones, punctuation?"
+3. "What tone do you want in cover letters? Peer-to-peer, confident and direct, warm, formal?"
+
+Update `context/writing-voice.md`.
+
+---
+
+### Section Update: Layout
+
+Ask:
+1. "What page size do you prefer for your PDFs — US Letter or A4?"
+
+Update `context/layout-preferences.md`.
+
+---
+
+## Phase 9: Write All Context Files
+
+After completing the full setup flow (or a section update), write the relevant files.
 
 **For full setup, write all of the following. For section updates, write only the files listed for that section.**
 
 #### `context/user-profile.md`
-Structure:
 ```
 # User Profile
 
 ## Who I Am
-[Name, location, professional identity statement from Phase 3 synthesis]
+[Name, location, professional identity synthesized from resume or Q&A]
 
 ## How I Work
-[Working style, preferences, strengths from Phase 3 Q2]
+[Working style, strengths, what they're known for]
 
 ## What I'm Great At
-[2-4 core skill areas from Phase 3 Q2 + Phase 6]
+[2-4 core skill areas]
 
 ## Current Situation / Goals
-[What they're looking for, why they're in the job market if mentioned]
+[What they're looking for next]
 
 ## Contact
-[Name, location, email, phone, LinkedIn from Phase 2]
+[Name, location, email, phone, LinkedIn]
 ```
 
 #### `context/positioning-narrative.md`
-Structure:
 ```
 # Positioning Narrative
 
 ## Core Positioning (1 sentence)
-[Synthesized from Phase 3 — who they are + what they bring + for whom]
+[Who they are + what they bring + for whom]
 
 ## What I Am
-[3-4 bullet points of what defines their professional identity]
+[3-4 bullet points defining professional identity]
 
 ## What I'm Not
-[2-3 bullet points clarifying what they're NOT — helps avoid mis-targeting]
+[2-3 bullet points — helps avoid mis-targeting]
 
 ## Career Reframe (if applicable)
-[If they have non-traditional background, entrepreneurship, career gaps, etc — how to frame it as a strength]
+[Non-traditional background, gaps, entrepreneurship — framed as strength]
 
 ## Proof Themes
-[3-4 recurring proof patterns from Phase 5 bullets — "here's the situation... here's what I built... here's what changed"]
+[3-4 recurring proof patterns: situation → what was built → what changed]
 ```
 
 #### `context/target-roles.md`
-Structure:
 ```
 # Target Roles
 
 ## Lane Definitions
 
 ### Lane [Label] — [one-line description]
-**Titles:** [list of role titles in this lane]
-**Core value:** [what the user brings to this type of role]
-**Positioning emphasis:** [what to lead with in resume and cover letter for this lane]
+**Titles:** [list of role titles]
+**Core value:** [what the user brings to this lane]
+**Positioning emphasis:** [what to lead with for this lane]
 
 [Repeat for each lane]
 
 ## Search Keywords
-[Flat list of 15-20 search terms — role titles, skills, technologies, functions]
+[Flat list of 15-20 search terms]
 ```
 
 #### `context/constraints-and-boundaries.md`
-Structure:
 ```
 # Constraints & Boundaries
 
 ## Must-Haves
-[List from Phase 4 — non-negotiables]
+[Non-negotiables]
 
 ## Avoid
-[List from Phase 4 — role types, environments, industries to skip]
+[Role types, environments, industries to skip]
 
 ## Hard Constraints
-[Travel, remote, company size, etc.]
+[Travel, remote, company size, geography]
 
 ## Fit Notes
-[Any nuance — e.g., "sales-adjacent is fine if it's enablement, not cold prospecting"]
+[Any nuance that doesn't fit neatly above]
 ```
 
 #### `context/resume-bullet-bank.md`
-Structure:
 ```
 # Resume Bullet Bank
 
 > Bullet format rule: Every bullet must follow Ownership verb + System/Process + Impact. 1-2 lines max.
-> Timeline accuracy: Do not conflate skills from different periods. Note the date range each capability applies to.
+> Timeline accuracy: Do not conflate skills from different periods.
 
 ## [Most Recent Role] | [Title] | [Dates]
 
-### [Category — e.g., Core Function, Leadership, Systems, etc.]
-
-[Bullet from Phase 5]
-[Bullet from Phase 5]
-[Bullet from Phase 5]
+### [Category]
+[Bullet]
+[Bullet]
 
 [Repeat for each role]
 
 ## Education
-
-[Education entries]
+[Degree, Field — University (Year)]
 ```
 
 #### `context/metrics-and-proof-points.md`
-Structure:
 ```
 # Metrics & Proof Points
 
 ## Revenue / Business Impact
 | Achievement | Metric | Context | Date/Period |
 |-------------|--------|---------|-------------|
-[from Phase 5 Q3]
 
 ## Efficiency / Process Improvement
 | Achievement | Metric | Context | Date/Period |
 |-------------|--------|---------|-------------|
-[from Phase 5 Q3]
 
 ## Growth / Scale
 | Achievement | Metric | Context | Date/Period |
 |-------------|--------|---------|-------------|
-[from Phase 5 Q3]
 
 ## Raw Data
-[Any other numbers mentioned that haven't been categorized yet]
+[Any numbers not yet categorized]
 ```
 
 #### `context/systems-experience.md`
-Structure:
 ```
 # Systems & Technical Experience
 
 ## Platforms & Tools
-[Organized list from Phase 6 Q1 — group by category if applicable]
+[Grouped by category]
 
 ## Core Capabilities
-[From Phase 6 Q2 — signature technical/domain skills]
+[Signature skills — things they'd be hired for]
 
 ## Specialized Knowledge
-[From Phase 6 Q3 — anything that sets them apart]
+[Domain expertise, niche knowledge, certifications]
 ```
 
 #### `context/writing-voice.md`
-Structure:
 ```
 # Writing Voice & Communication Style
 
 ## Overall Tone
-[From Phase 7 Q1]
+[Synthesized from resume voice and/or user's description]
 
 ## Style Preferences
-[From Phase 7 Q2+Q3 — active preferences]
+[Active preferences]
 
 ## What to Avoid
-[From Phase 7 Q2+Q3 — explicit avoid list]
+[Explicit avoid list — words, phrases, tones, punctuation]
 
 ## Cover Letter Tone
-[From Phase 7 Q4]
+[Peer-to-peer / confident / warm / formal]
 ```
 
 #### `context/layout-preferences.md`
@@ -352,33 +406,31 @@ Structure:
 # Layout Preferences
 
 ## Page Size
-[letter or a4 from Phase 8]
+letter
 
 ## Notes
-[Any visual preferences noted — reminder that advanced customization requires styles.css edit]
+Advanced customization (fonts, colors, spacing) requires editing reference/layout/styles.css directly.
 ```
 
 #### `reference/resume-template.md`
-Personalize the header with actual contact info from Phase 2. Keep the rest of the template structure generic.
+Update the header with the user's actual contact info. Keep the rest of the template structure as-is.
 
-#### System files (write once for all users, same content):
-- `context/role-classifier.md` — copy the generic role classifier content
-- `context/bullet-selection-rules.md` — copy the generic bullet selection rules
-- `context/output-rules.md` — copy the generic output rules
-
-These three files contain engine logic, not personal data. They are the same for all users and do not need to be personalized.
+#### System files (engine logic — same for all users, do not personalize):
+- `context/role-classifier.md`
+- `context/bullet-selection-rules.md`
+- `context/output-rules.md`
 
 ---
 
-### Phase 10: Confirmation
+## Phase 10: Confirmation
 
 After writing all files:
 
-1. List every file created or updated with its path.
-2. Show a one-paragraph summary: "Here's what I know about you: [synthesized summary of who they are, what they're targeting, and their key strengths]."
+1. List every file created or updated.
+2. Show a one-paragraph summary: "Here's what I know about you: [synthesized summary — who they are, what they're targeting, key strengths]."
 3. Show their defined lanes with one-line descriptions.
-4. Say: "Your context is ready. Here are your next steps:
-   - Review the files in `context/` — especially `resume-bullet-bank.md`. Add [TBD] metrics as you remember them.
-   - Run `/load` at the start of each new session to load context, and between applications to start fresh.
+4. Say: "Your context is ready. Here's what to do next:
+   - Review `context/resume-bullet-bank.md` and fill in any [TBD] metrics as you remember them.
+   - Run `/load` at the start of each session, and between applications to start fresh.
    - When you have a job to apply to, run `/apply [paste the job description]`.
-   - To update any section of your context later, run `/setup [section-name]`."
+   - To update any section later, run `/setup [section-name]`."
