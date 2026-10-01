@@ -1,4 +1,4 @@
-# Job Application Engine
+# The Application Engine
 
 A Claude Code workspace that generates tailored, submission-ready job applications — resume, cover letter, fit analysis, and PDF export — from a job description and your professional context.
 
